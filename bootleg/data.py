@@ -134,7 +134,7 @@ def get_dataloaders(
                 or args.run_config.eval_batch_size is None
                 else args.run_config.eval_batch_size,
                 num_workers=args.run_config.dataloader_threads,
-                pin_memory=False,
+                pin_memory=True,
             )
         )
         log_rank_0_info(
@@ -195,7 +195,7 @@ def get_entity_dataloaders(
         or args.run_config.eval_batch_size is None
         else args.run_config.eval_batch_size,
         num_workers=args.run_config.dataloader_threads,
-        pin_memory=False,
+        pin_memory=True,
     )
     log_rank_0_info(
         logger,

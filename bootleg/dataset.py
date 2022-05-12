@@ -830,6 +830,7 @@ def convert_examples_to_features_and_save_single(
                 # if we are not using a NC (no candidate) but are in eval mode, we let the gold
                 # candidate not be in the candidate set we give in a true index of -2,
                 # meaning our model will always get this example incorrect
+                print(split)
                 assert split in ["test", "dev"], (
                     f"Expected split of 'test' or 'dev' in sent {example.sent_idx}. If you are training, "
                     f"the QID {qid} must be in the candidate list for {alias} for "
