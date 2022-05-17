@@ -153,7 +153,7 @@ class BootlegAnnotator(object):
         model_name: str = None,
         entity_emb_file: str = None,
         return_embs: bool = False,
-        extract_method: str = "ngram_spacy",
+        extract_method: str = "custom",
         verbose: bool = False,
     ):
         """Bootleg annotator initializer."""
@@ -269,11 +269,12 @@ class BootlegAnnotator(object):
         logger.debug("Reading word tokenizers")
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.config.data_config.word_embedding.bert_model,
-            do_lower_case=True
-            if "uncased" in self.config.data_config.word_embedding.bert_model
-            else False,
+            do_lower_case=True if "uncased" in self.config.data_config.word_embedding.bert_model else False,
             cache_dir=self.config.data_config.word_embedding.cache_dir,
         )
+        # TODO: to be checked if the cache not works
+        self.tokenizer.save_pretrained(self.config.data_config.word_embedding.cache_dir)
+
         data_utils.add_special_tokens(self.tokenizer)
 
         # Create tasks

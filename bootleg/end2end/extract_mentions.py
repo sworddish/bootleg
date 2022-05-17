@@ -20,6 +20,7 @@ from bootleg.utils.classes.nested_vocab_tries import VocabularyTrie
 from bootleg.utils.mention_extractor_utils import (
     ngram_spacy_extract_aliases,
     spacy_extract_aliases,
+    flair_mention_extractor,
 )
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,7 @@ logger = logging.getLogger(__name__)
 MENTION_EXTRACTOR_OPTIONS = {
     "ngram_spacy": ngram_spacy_extract_aliases,
     "spacy": spacy_extract_aliases,
+    "custom": flair_mention_extractor,
 }
 
 
