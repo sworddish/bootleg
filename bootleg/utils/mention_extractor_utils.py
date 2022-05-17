@@ -286,37 +286,19 @@ def flair_mention_extractor(
     entity_end: character end position of entity in raw text
     """
     # TODO: chinese sentence need to be converted into whitespace segmented string
-    sentence = Sentence(list(text))
+    sentence = Sentence(' '.join(list(text)))
     logger.debug("Extract mention with custom flair model")
     tagger_fast.predict(sentence, mini_batch_size=16)
     entities = []
-    for i in range(len(sentence.to_dict(tag_type="ner")["entities"])):
+    for entity in sentence.get_spans('ner'):
         str_main = None
         start_pos = -1
         end_pos = -1
-        if (
-            str(sentence.to_dict(tag_type="ner")["entities"][i]["labels"][0]).split()[0]
-            in "ORG"
-        ):
-            str_main = str(sentence.to_dict(tag_type="ner")["entities"][i]["text"])
-            start_pos = sentence.to_dict(tag_type="ner")["entities"][i]["start_pos"]
-            end_pos = sentence.to_dict(tag_type="ner")["entities"][i]["end_pos"]
-
-        elif (
-            str(sentence.to_dict(tag_type="ner")["entities"][i]["labels"][0]).split()[0]
-            in "PERSON"
-        ):
-            str_main = str(sentence.to_dict(tag_type="ner")["entities"][i]["text"])
-            start_pos = sentence.to_dict(tag_type="ner")["entities"][i]["start_pos"]
-            end_pos = sentence.to_dict(tag_type="ner")["entities"][i]["end_pos"]
-
-        elif (
-            str(sentence.to_dict(tag_type="ner")["entities"][i]["labels"][0]).split()[0]
-            in "GPE"
-        ):
-            str_main = str(sentence.to_dict(tag_type="ner")["entities"][i]["text"])
-            start_pos = sentence.to_dict(tag_type="ner")["entities"][i]["start_pos"]
-            end_pos = sentence.to_dict(tag_type="ner")["entities"][i]["end_pos"]
+        label = entity.get_label("ner").value
+        if label.split('.')[0] in ['PER','GPE','LOC','ORG']:
+            str_main = entity.text.replace(' ','')
+            start_pos = entity.start_position
+            end_pos = entity.end_position
         if str_main is not None and (start_pos != -1 and end_pos != -1):
             final_gram = None
             if str_main in all_aliases:
