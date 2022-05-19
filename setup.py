@@ -34,7 +34,7 @@ REQUIRED = [
     "scikit_learn>=0.24.0, <0.27.0",
     "scipy>=1.6.1, <1.9.0",
     "sentencepiece==0.1.*",
-    "spacy==3.0.1",
+    "spacy==3.2.0",
     "tagme>=0.1.3, <0.2.0",
     "torch>=1.7.0, <1.10.5",
     "tqdm>=4.27",
