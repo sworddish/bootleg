@@ -271,6 +271,7 @@ class BootlegAnnotator(object):
             self.config.data_config.word_embedding.bert_model,
             do_lower_case=True if "uncased" in self.config.data_config.word_embedding.bert_model else False,
             cache_dir=self.config.data_config.word_embedding.cache_dir,
+            local_files_only=True
         )
         # TODO: to be checked if the cache not works
         self.tokenizer.save_pretrained(self.config.data_config.word_embedding.cache_dir)
@@ -419,6 +420,7 @@ class BootlegAnnotator(object):
         batch_char_spans_arr = []
         batch_example_aliases = []
         batch_idx_unq = []
+        // TODO: should be converted into multithread or multiprocessing
         for idx_unq in tqdm(
             range(num_exs),
             desc="Prepping data",
