@@ -420,7 +420,7 @@ class BootlegAnnotator(object):
         batch_char_spans_arr = []
         batch_example_aliases = []
         batch_idx_unq = []
-        // TODO: should be converted into multithread or multiprocessing
+        # TODO: should be converted into multithread or multiprocessing
         for idx_unq in tqdm(
             range(num_exs),
             desc="Prepping data",
